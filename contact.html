@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>যোগাযোগ - Paradise Tech / BWMAC</title>
+  <title>যোগাযোগ - Paradise Tech</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,7 +22,7 @@
     }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 antialiased min-h-screen flex flex-col justify-between">
+<body class="bg-slate-900 text-slate-100 antialiased selection:bg-blue-500 selection:text-white min-h-screen flex flex-col justify-between">
 
   <!-- Header -->
   <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
@@ -33,28 +33,35 @@
         </a>
         <span class="block text-xs text-slate-400 font-medium">B2B Network & Telecom Partner</span>
       </div>
-      <div class="flex items-center gap-4">
-        <a href="index.html" class="text-slate-300 hover:text-blue-400 font-medium transition">হোম</a>
+
+      <!-- Navigation & Action -->
+      <div class="flex items-center gap-6">
+        <nav class="flex items-center gap-6 text-sm md:text-base">
+          <a href="index.html" class="text-slate-400 hover:text-blue-400 font-medium transition pb-1">হোম</a>
+          <!-- Active State for Contact -->
+          <a href="contact.html" class="text-blue-400 font-bold border-b-2 border-blue-400 pb-1">যোগাযোগ</a>
+        </nav>
+
         <a href="https://wa.me/8801407835827" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-2 rounded-xl text-sm transition">
           <i class="fa-brands fa-whatsapp text-base"></i>
-          <span>WhatsApp Chat</span>
+          <span class="hidden sm:inline">WhatsApp Chat</span>
         </a>
       </div>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="max-w-4xl mx-auto px-6 py-16 w-full">
-    <div class="text-center mb-12">
+  <main class="max-w-4xl mx-auto px-6 py-14 w-full flex-1">
+    <div class="text-center mb-10">
       <span class="inline-block bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-3 uppercase tracking-wider">
-        ২৪/৭ সাপোর্ট ও হটলাইন
+        সার্বক্ষণিক সহায়তা
       </span>
-      <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-4">আমাদের সাথে যোগাযোগ করুন</h1>
+      <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-3">আমাদের সাথে যোগাযোগ করুন</h1>
       <p class="text-slate-400 text-base md:text-lg">ব্যান্ডউইথ, ম্যাক বা নেটওয়ার্ক সম্পর্কিত যেকোনো তথ্যের জন্য সরাসরি যোগাযোগ করুন।</p>
     </div>
 
     <!-- Contact Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
       <!-- Call Card -->
       <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 text-center hover:border-blue-500/50 transition">
         <div class="w-12 h-12 mx-auto bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center text-xl mb-4">
@@ -81,9 +88,9 @@
     </div>
 
     <!-- Quick Message Form -->
-    <div class="bg-slate-800/40 border border-slate-700/80 rounded-2xl p-8">
+    <div class="bg-slate-800/40 border border-slate-700/80 rounded-2xl p-6 sm:p-8">
       <h2 class="text-xl font-bold text-white mb-6 text-center">বার্তা পাঠান</h2>
-      <form class="space-y-4" onsubmit="event.preventDefault(); alert('ধন্যবাদ! আপনার বার্তাটি পাঠানো হয়েছে।');">
+      <form class="space-y-4" onsubmit="event.preventDefault(); alert('ধন্যবাদ! আপনার বার্তাটি গ্রহণ করা হয়েছে।');">
         <div>
           <label class="block text-sm text-slate-300 mb-1">আপনার নাম / প্রতিষ্ঠানের নাম</label>
           <input type="text" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 transition" placeholder="নাম লিখুন">
@@ -104,8 +111,14 @@
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
-    <p>&copy; 2026 Paradise Tech. সর্বস্বত্ব সংরক্ষিত।</p>
+  <footer class="border-t border-slate-800 bg-slate-900/60 py-6 text-center text-slate-500 text-sm">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>&copy; 2026 Paradise Tech. সর্বস্বত্ব সংরক্ষিত।</p>
+      <div class="flex gap-4">
+        <a href="index.html" class="hover:text-slate-400 transition">হোম</a>
+        <a href="contact.html" class="hover:text-slate-400 transition">যোগাযোগ</a>
+      </div>
+    </div>
   </footer>
 
 </body>
