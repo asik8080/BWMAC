@@ -81,8 +81,8 @@
 
     <!-- Bandwidth / IP Search Box -->
     <section class="bg-slate-800/60 border border-slate-700/70 rounded-2xl p-6 md:p-8 mb-12 shadow-xl">
-      <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-        <i class="fa-solid fa-network-wired text-blue-400"></i> PoP & Bandwidth Availability Check
+      <h2 class="text-lg font-bold text-white mb-4 flex items-center justify-center gap-2 text-center">
+        <i class="fa-solid fa-network-wired text-blue-400"></i> MAC & Bandwidth Availability Check
       </h2>
 
       <div class="space-y-4">
@@ -107,12 +107,20 @@
             <option value="">জেলা বেছে নিন</option>
           </select>
 
-          <input id="unionInput" type="text" placeholder="Union / Thana / Area" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition text-sm">
+          <select id="thanaSelect" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
+            <option value="">থানা বেছে নিন</option>
+          </select>
 
-          <input id="villageInput" type="text" placeholder="Village / Locality (optional)" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition text-sm">
+          <select id="unionSelect" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
+            <option value="">ইউনিয়ন বেছে নিন</option>
+          </select>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
+          <select id="villageSelect" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
+            <option value="">গ্রাম/লোকেশন বেছে নিন</option>
+          </select>
+
           <select id="serviceType" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
             <option value="">সার্ভিসের ধরন বেছে নিন</option>
             <option value="raw">Raw Bandwidth (IP Transit)</option>
@@ -120,8 +128,8 @@
             <option value="pop">Direct PoP Handover</option>
           </select>
 
-          <input id="latitudeInput" type="text" placeholder="Latitude (optional)" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition text-sm">
           <div class="flex gap-2">
+            <input id="latitudeInput" type="text" placeholder="Latitude (optional)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition text-sm">
             <input id="longitudeInput" type="text" placeholder="Longitude (optional)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition text-sm">
             <button type="button" onclick="getCurrentLocation()" class="bg-slate-700 hover:bg-slate-600 text-white font-medium px-3 rounded-xl transition text-sm whitespace-nowrap">
               <i class="fa-solid fa-location-crosshairs"></i>
@@ -129,7 +137,7 @@
           </div>
         </div>
 
-        <div class="mt-4 flex justify-end">
+        <div class="mt-4 flex justify-center">
           <button onclick="checkAvailability()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-lg shadow-blue-600/30">
             <i class="fa-solid fa-magnifying-glass"></i> সার্চ করুন
           </button>
@@ -257,16 +265,84 @@
       Mymensingh: ['Mymensingh', 'Jamalpur', 'Netrokona', 'Sherpur']
     };
 
+    const districtThanaMap = {
+      Dhaka: ['Motijheel', 'Uttara', 'Dhanmondi', 'Gulshan', 'Savar', 'Mirpur', 'Keraniganj', 'Dhamrai'],
+      Narayanganj: ['Siddhirganj', 'Rupganj', 'Fatullah', 'Sonargaon', 'Araihazar'],
+      Gazipur: ['Gazipur Sadar', 'Tongi', 'Kaliakair', 'Sreepur', 'Kapasia'],
+      Chattogram: ['Agrabad', 'Patenga', 'Patiya', 'Hathazari', 'Sitakunda', 'Raozan'],
+      Cox's Bazar: ['Cox\'s Bazar Sadar', 'Teknaf', 'Ukhia', 'Ramu', 'Maheshkhali'],
+      Cumilla: ['Cumilla Sadar', 'Debidwar', 'Muradnagar', 'Laksham', 'Chandina'],
+      Khulna: ['Khulna Sadar', 'Dumuria', 'Batiaghata', 'Paikgasa', 'Terokhada'],
+      Rajshahi: ['Rajshahi Sadar', 'Paba', 'Godagari', 'Bagha', 'Mohanpur'],
+      Bogura: ['Bogura Sadar', 'Sariakandi', 'Shibganj', 'Dupchanchia', 'Adamdighi'],
+      Barishal: ['Barishal Sadar', 'Bakerganj', 'Gournadi', 'Uzirpur', 'Mehendiganj'],
+      Sylhet: ['Sylhet Sadar', 'Balaganj', 'Golapganj', 'Jaintiapur', 'Kanaighat'],
+      Rangpur: ['Rangpur Sadar', 'Kaunia', 'Pirgachha', 'Badarganj', 'Taraganj'],
+      Mymensingh: ['Mymensingh Sadar', 'Fulbaria', 'Muktagachha', 'Trishal', 'Gafargaon']
+    };
+
+    const thanaUnionMap = {
+      Motijheel: ['Motijheel Ward 1', 'Motijheel Ward 2', 'Motijheel Ward 3', 'Custom Union'],
+      Uttara: ['Uttara Sector 1', 'Uttara Sector 2', 'Uttara Sector 3', 'Custom Union'],
+      Dhanmondi: ['Dhanmondi Ward 1', 'Dhanmondi Ward 2', 'Dhanmondi Ward 3', 'Custom Union'],
+      Gulshan: ['Gulshan Ward 1', 'Gulshan Ward 2', 'Gulshan Ward 3', 'Custom Union'],
+      Savar: ['Savar Union 1', 'Savar Union 2', 'Savar Union 3', 'Custom Union'],
+      Default: ['Custom Union', 'Local Area Union']
+    };
+
+    const unionVillageMap = {
+      'Custom Union': ['Custom Village', 'Local Village', 'Nearby Village'],
+      'Local Area Union': ['Custom Village', 'Local Village', 'Nearby Village'],
+      'Default': ['Custom Village', 'Local Village', 'Nearby Village']
+    };
+
+    function setSelectOptions(selectElement, options, placeholderText) {
+      selectElement.innerHTML = '<option value="">' + placeholderText + '</option>' +
+        options.map(item => `<option value="${item}">${item}</option>`).join('');
+    }
+
     function populateDistricts() {
       const division = document.getElementById('divisionSelect').value;
       const districtSelect = document.getElementById('districtSelect');
       const districts = bdDistricts[division] || [];
 
-      districtSelect.innerHTML = '<option value="">জেলা বেছে নিন</option>' +
-        districts.map(d => `<option value="${d}">${d}</option>`).join('');
+      setSelectOptions(districtSelect, districts, 'জেলা বেছে নিন');
+      document.getElementById('thanaSelect').innerHTML = '<option value="">থানা বেছে নিন</option>';
+      document.getElementById('unionSelect').innerHTML = '<option value="">ইউনিয়ন বেছে নিন</option>';
+      document.getElementById('villageSelect').innerHTML = '<option value="">গ্রাম/লোকেশন বেছে নিন</option>';
+    }
+
+    function populateThanas() {
+      const district = document.getElementById('districtSelect').value;
+      const thanaSelect = document.getElementById('thanaSelect');
+      const options = districtThanaMap[district] || ['Custom Thana', 'Nearby Thana', 'Local Thana'];
+
+      setSelectOptions(thanaSelect, options, 'থানা বেছে নিন');
+      document.getElementById('unionSelect').innerHTML = '<option value="">ইউনিয়ন বেছে নিন</option>';
+      document.getElementById('villageSelect').innerHTML = '<option value="">গ্রাম/লোকেশন বেছে নিন</option>';
+    }
+
+    function populateUnions() {
+      const thana = document.getElementById('thanaSelect').value;
+      const unionSelect = document.getElementById('unionSelect');
+      const options = thanaUnionMap[thana] || thanaUnionMap.Default;
+
+      setSelectOptions(unionSelect, options, 'ইউনিয়ন বেছে নিন');
+      document.getElementById('villageSelect').innerHTML = '<option value="">গ্রাম/লোকেশন বেছে নিন</option>';
+    }
+
+    function populateVillages() {
+      const union = document.getElementById('unionSelect').value;
+      const villageSelect = document.getElementById('villageSelect');
+      const options = unionVillageMap[union] || unionVillageMap.Default;
+
+      setSelectOptions(villageSelect, options, 'গ্রাম/লোকেশন বেছে নিন');
     }
 
     document.getElementById('divisionSelect').addEventListener('change', populateDistricts);
+    document.getElementById('districtSelect').addEventListener('change', populateThanas);
+    document.getElementById('thanaSelect').addEventListener('change', populateUnions);
+    document.getElementById('unionSelect').addEventListener('change', populateVillages);
 
     function getCurrentLocation() {
       if (!navigator.geolocation) {
@@ -294,8 +370,9 @@
       const country = document.getElementById('countrySelect').value.trim();
       const division = document.getElementById('divisionSelect').value.trim();
       const district = document.getElementById('districtSelect').value.trim();
-      const union = document.getElementById('unionInput').value.trim();
-      const village = document.getElementById('villageInput').value.trim();
+      const thana = document.getElementById('thanaSelect').value.trim();
+      const union = document.getElementById('unionSelect').value.trim();
+      const village = document.getElementById('villageSelect').value.trim();
       const latitude = document.getElementById('latitudeInput').value.trim();
       const longitude = document.getElementById('longitudeInput').value.trim();
       const serviceType = document.getElementById('serviceType').value;
@@ -317,11 +394,11 @@
         return;
       }
 
-      const searchValues = [division, district, union, village].filter(Boolean);
+      const searchValues = [division, district, thana, union, village].filter(Boolean);
       const searchText = searchValues.join(' ') || country;
 
       if (!searchText && !latitude && !longitude) {
-        resultBox.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-triangle-exclamation"></i> বিভাগ, জেলা, ইউনিয়ন/গ্রাম বা latitude/longitude-এর যে কোন একটি দিন।</span>';
+        resultBox.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-triangle-exclamation"></i> বিভাগ, জেলা, থানা, ইউনিয়ন বা latitude/longitude-এর যে কোন একটি দিন।</span>';
         return;
       }
 
@@ -352,11 +429,10 @@
 
         if (!data || data.length === 0) {
           const fallbackQuery = supabaseClient.from('pops').select('*');
-          let fallback = await fallbackQuery.ilike('location', `%${locationQuery}%`);
-
-          if (fallback.error) throw fallback.error;
-          data = fallback.data;
-          error = fallback.error;
+          const fallbackResult = await fallbackQuery.ilike('location', `%${locationQuery}%`);
+          if (fallbackResult.error) throw fallbackResult.error;
+          data = fallbackResult.data;
+          error = fallbackResult.error;
         }
 
         if (error) throw error;
