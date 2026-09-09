@@ -114,6 +114,7 @@
       <div id="topbarActions" class="flex items-center gap-3 sm:gap-6">
         <nav class="flex items-center gap-4 sm:gap-6 text-sm md:text-base">
           <a href="index.html" class="text-blue-400 font-bold border-b-2 border-blue-400 pb-1">হোম</a>
+          <a href="#availability-check" class="text-slate-400 hover:text-blue-400 font-medium transition pb-1">Check Coverage Area</a>
           <a href="contact.html" class="text-slate-400 hover:text-blue-400 font-medium transition pb-1">যোগাযোগ</a>
         </nav>
 
@@ -148,7 +149,7 @@
     </div>
 
     <!-- Bandwidth / IP Search Box -->
-    <section class="bg-slate-800/60 border border-slate-700/70 rounded-2xl p-6 md:p-8 mb-12 shadow-xl">
+    <section id="availability-check" class="bg-slate-800/60 border border-slate-700/70 rounded-2xl p-6 md:p-8 mb-12 shadow-xl scroll-mt-24">
       <h2 class="text-lg font-bold text-white mb-4 flex items-center justify-center gap-2 text-center">
         <i class="fa-solid fa-network-wired text-blue-400"></i> MAC & Bandwidth Availability Check
       </h2>
@@ -653,7 +654,8 @@
       }
 
       const searchValues = [division, district, thana, union, village].filter(Boolean);
-      const searchText = searchValues.join(' ') || country;
+      const searchText = searchValues[searchValues.length - 1] || country;
+      const locationLabel = searchValues.join(' ') || country;
 
       if (!searchText && !latitude && !longitude) {
         resultBox.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-triangle-exclamation"></i> বিভাগ, জেলা, থানা, ইউনিয়ন বা latitude/longitude-এর যে কোন একটি দিন।</span>';
@@ -696,15 +698,21 @@
         if (error) throw error;
 
         if (data && data.length > 0) {
-          const capacity = data[0].capacity_mbps || data[0].capacity || 'N/A';
+          const capacities = data
+            .map(row => Number(row.capacity_mbps ?? row.capacity))
+            .filter(capacity => Number.isFinite(capacity));
+          const averageCapacity = capacities.length > 0
+            ? Math.round(capacities.reduce((total, capacity) => total + capacity, 0) / capacities.length)
+            : null;
+          const capacityText = averageCapacity === null ? 'N/A' : `${averageCapacity} Mbps`;
           resultBox.innerHTML = `
             <div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl text-emerald-400">
-              <i class="fa-solid fa-circle-check"></i> ${searchText}-এ ${selectedLabel} জন্য PoP কভারেজ পাওয়া গেছে। মোট ${data.length}টি হাব পাওয়া গেছে। ক্যাপাসিটি: ${capacity} Mbps
+              <i class="fa-solid fa-circle-check"></i> ${locationLabel}-এ ${selectedLabel} জন্য PoP কভারেজ পাওয়া গেছে। মোট ${data.length}টি হাব পাওয়া গেছে। Average available: ${capacityText}
             </div>`;
         } else {
           resultBox.innerHTML = `
             <div class="bg-blue-500/10 border border-blue-500/30 p-3 rounded-xl text-slate-300">
-              ${searchText}-এর জন্য সরাসরি কভারেজ পাওয়া যায়নি। তবে কাস্টম ফাইবার লিঙ্কের মাধ্যমে কানেকশন দেওয়া সম্ভব। নিচে কোটেশন ফর্মটি পূরণ করুন।
+              ${locationLabel}-এর জন্য সরাসরি কভারেজ পাওয়া যায়নি। তবে কাস্টম ফাইবার লিঙ্কের মাধ্যমে কানেকশন দেওয়া সম্ভব। নিচে কোটেশন ফর্মটি পূরণ করুন।
             </div>`;
         }
       } catch (err) {
