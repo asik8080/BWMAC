@@ -3,241 +3,227 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nationwide ISP PoP & Wholesale Bandwidth Solutions</title>
-  
+  <title>Paradise Tech - Nationwide ISP PoP & Wholesale Bandwidth Solutions</title>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <!-- Google Bengali Font (Hind Siliguri) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  
+
   <style>
     body {
       font-family: 'Hind Siliguri', sans-serif;
     }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 antialiased selection:bg-blue-500 selection:text-white">
+<body class="bg-slate-900 text-slate-100 antialiased selection:bg-blue-500 selection:text-white min-h-screen flex flex-col justify-between">
 
   <!-- Header -->
   <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
       <div>
-        <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tracking-wide">
+        <a href="index.html" class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 tracking-wide">
           PARADISE TECH
-        </span>
+        </a>
         <span class="block text-xs text-slate-400 font-medium">B2B Network & Telecom Partner</span>
       </div>
-<!-- Header এর ভেতর WhatsApp বাটনের ঠিক আগে -->
-<div class="flex items-center gap-4">
-  <a href="contact.html" class="text-slate-300 hover:text-blue-400 font-medium transition">যোগাযোগ</a>
-  <a href="https://wa.me/8801407835827" target="_blank" class="...">
-    ...
-  </a>
-</div>
 
-      <a href="https://wa.me/8801407835827" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg transition duration-200 text-sm shadow-md shadow-emerald-900/20">
-        <i class="fa-brands fa-whatsapp text-lg"></i>
-        <span>WhatsApp Chat</span>
-      </a>
+      <div class="flex items-center gap-6">
+        <nav class="flex items-center gap-6 text-sm md:text-base">
+          <a href="index.html" class="text-blue-400 font-bold border-b-2 border-blue-400 pb-1">হোম</a>
+          <a href="contact.html" class="text-slate-400 hover:text-blue-400 font-medium transition pb-1">যোগাযোগ</a>
+        </nav>
+
+        <a href="https://wa.me/8801407835827" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-2 rounded-xl text-sm transition">
+          <i class="fa-brands fa-whatsapp text-base"></i>
+          <span class="hidden sm:inline">WhatsApp Chat</span>
+        </a>
+      </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="max-w-7xl mx-auto px-6 pt-16 pb-20 text-center">
-    <div class="inline-block bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 uppercase tracking-wider">
-      Tier-1 IIG Uplink & Nationwide PoP
-    </div>
-    <h1 class="text-3xl md:text-5xl font-extrabold leading-tight max-w-4xl mx-auto mb-6">
-      আপনার এলাকায় <span class="text-blue-400">ISP ব্যবসা পরিচালনার জন্য</span> প্রিমিয়াম ব্যান্ডউইথ ও অফিশিয়াল সাপোর্ট
-    </h1>
-    <p class="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-10">
-      Multiple IIG Routes । লাইসেন্সিং ঝামেলা ছাড়াই Nationwide ISP PoP পার্টনারশিপ এবং সার্বক্ষণিক ২৪/৭ টেকনিক্যাল সাপোর্ট।
-    </p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="#quote-form" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-blue-500/25 transition">
-        কোটেশন রিকোয়েস্ট করুন
-      </a>
-      <a href="https://wa.me/8801407835827" target="_blank" class="border border-slate-700 hover:border-slate-500 text-slate-200 font-semibold px-8 py-3.5 rounded-xl transition">
-        সরাসরি কথা বলুন
-      </a>
-    </div>
-  </section>
-
-  <!-- Uplink Badges -->
-  <section class="border-y border-slate-800 bg-slate-950/50 py-8">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-      <p class="text-xs uppercase tracking-widest text-slate-500 mb-6 font-semibold">Redundant Direct IIG Uplinks</p>
-      <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 text-slate-300 font-bold text-lg">
-        <div class="flex items-center gap-2"><i class="fa-solid fa-network-wired text-blue-500"></i> BSCCL</div>
-        <div class="flex items-center gap-2"><i class="fa-solid fa-server text-teal-500"></i> EXABYTE</div>
-        <div class="flex items-center gap-2"><i class="fa-solid fa-bolt text-amber-500"></i> REGO</div>
-        <div class="flex items-center gap-2"><i class="fa-solid fa-shield-halved text-emerald-500"></i> BDIX / CACHE</div>
+  <!-- Main Container -->
+  <main class="max-w-5xl mx-auto px-6 pt-12 pb-20 flex-1 w-full">
+    
+    <!-- Hero Section -->
+    <div class="text-center mb-12">
+      <div class="inline-block bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider">
+        Tier-1 IIG Uplink & Nationwide PoP
       </div>
-    </div>
-  </section>
-
-  <!-- Core Services -->
-  <section class="max-w-7xl mx-auto px-6 py-20">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl font-bold mb-3">আমাদের প্রধান সেবাসমূহ</h2>
-      <p class="text-slate-400 max-w-lg mx-auto text-sm">লোকাল আইএসপি ও নতুন উদ্যোক্তাদের জন্য টেকসই নেটওয়ার্ক সলিউশন।</p>
+      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-4">
+        আপনার এলাকায় <span class="text-blue-400">ব্যান্ডউইথ ও ম্যাক প্রাপ্যতা</span> যাচাই করুন
+      </h1>
+      <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
+        আপনার প্রয়োজনীয় এলাকা বা আইপি টাইপ নির্বাচন করে সরাসরি ডাটাবেজ থেকে ক্যাপাসিটি চেক করুন।
+      </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Card 1 -->
-      <div class="bg-slate-800/50 border border-slate-700/60 p-8 rounded-2xl hover:border-blue-500/40 transition">
-        <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 text-xl mb-6">
-          <i class="fa-solid fa-tower-broadcast"></i>
+    <!-- Bandwidth / IP Search Box -->
+    <section class="bg-slate-800/60 border border-slate-700/70 rounded-2xl p-6 md:p-8 mb-12 shadow-xl">
+      <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-network-wired text-blue-400"></i> PoP & Bandwidth Availability Check
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <input id="searchLocation" type="text" placeholder="এলাকা লিখুন (যেমন: ঢাকা, নারায়ণগঞ্জ)" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition text-sm">
+        
+        <select id="serviceType" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
+          <option value="">সার্ভিসের ধরন বেছে নিন</option>
+          <option value="raw">Raw Bandwidth (IP Transit)</option>
+          <option value="mac">MAC Based Bandwidth</option>
+          <option value="pop">Direct PoP Handover</option>
+        </select>
+
+        <button onclick="checkAvailability()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-lg shadow-blue-600/30">
+          <i class="fa-solid fa-magnifying-glass"></i> সার্চ করুন
+        </button>
+      </div>
+
+      <!-- Result Area -->
+      <div id="resultBox" class="mt-6 hidden border-t border-slate-700/60 pt-4 text-sm text-slate-300">
+        <!-- রেজাল্ট এখানে ডায়নামিকভাবে আসবে -->
+      </div>
+    </section>
+
+    <!-- Quotation Request Form -->
+    <section id="quote-form" class="bg-slate-800/40 border border-slate-700/80 rounded-2xl p-6 md:p-8">
+      <h2 class="text-xl font-bold text-white mb-2 text-center">কোটেশন রিকোয়েস্ট পাঠান</h2>
+      <p class="text-slate-400 text-sm text-center mb-6">আপনার চাহিদা লিখে সাবমিট করুন, আমাদের টেকনিক্যাল টিম যোগাযোগ করবে।</p>
+
+      <form id="inquiryForm" class="space-y-4 max-w-xl mx-auto" onsubmit="submitInquiry(event)">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1 uppercase tracking-wider">প্রতিষ্ঠানের নাম / আপনার নাম</label>
+          <input id="clientName" type="text" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 transition text-sm" placeholder="নাম লিখুন">
         </div>
-        <h3 class="text-xl font-bold mb-3">Nationwide PoP Partnership</h3>
-        <p class="text-slate-400 text-sm leading-relaxed">
-          লাইসেন্সিং ঝামেলা ছাড়াই Paradise Technologies Limited-এর অধীনে অফিসিয়াল PoP ডিক্লেয়ারেশন, সেন্ট্রাল বিলিং এবং পূর্ণাঙ্গ ম্যাক/রিসেলার প্যানেল সুবিধা।
-        </p>
-      </div>
 
-      <!-- Card 2 -->
-      <div class="bg-slate-800/50 border border-slate-700/60 p-8 rounded-2xl hover:border-teal-500/40 transition">
-        <div class="w-12 h-12 bg-teal-500/10 rounded-xl flex items-center justify-center text-teal-400 text-xl mb-6">
-          <i class="fa-solid fa-gauge-high"></i>
-        </div>
-        <h3 class="text-xl font-bold mb-3">Wholesale Bandwidth</h3>
-        <p class="text-slate-400 text-sm leading-relaxed">
-          BSCCL, Exabyte এবং Rego থেকে ডেডিকেটেড আইপি ট্রানজিট ও প্রিমিয়াম বিডিআইএক্স। পিক আওয়ারেও বাফারিং-ফ্রি হাই-স্পিড ব্যান্ডউইথ ডেলিভারি।
-        </p>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="bg-slate-800/50 border border-slate-700/60 p-8 rounded-2xl hover:border-amber-500/40 transition">
-        <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-400 text-xl mb-6">
-          <i class="fa-solid fa-microchip"></i>
-        </div>
-        <h3 class="text-xl font-bold mb-3">Core Routing Support</h3>
-        <p class="text-slate-400 text-sm leading-relaxed">
-          MikroTik BGP কনফিগারেশন, ব্যান্ডউইথ ম্যানেজমেন্ট, ক্যাশ অপ্টিমাইজেশন এবং সার্বক্ষণিক ২৪/৭ নেটওয়ার্ক ট্রাবলশুটিং সাপোর্ট।
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Lead Generation Form -->
-  <section id="quote-form" class="max-w-3xl mx-auto px-6 pb-24">
-    <div class="bg-slate-800/80 border border-slate-700 p-8 md:p-10 rounded-2xl shadow-2xl">
-      <div class="text-center mb-8">
-        <h2 class="text-2xl font-bold mb-2">কোটেশন ও এরিয়া কভারেজ চেক করুন</h2>
-        <p class="text-slate-400 text-sm">ফর্মটি পূরণ করুন, আমরা সরাসরি আপনার সাথে যোগাযোগ করব।</p>
-      </div>
-
-      <form id="leadForm" class="space-y-5">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs uppercase tracking-wider text-slate-300 mb-2 font-semibold">আপনার নাম</label>
-            <input type="text" id="name" placeholder="নাম লিখুন" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 text-sm" required />
+            <label class="block text-xs font-semibold text-slate-300 mb-1 uppercase tracking-wider">মোবাইল নম্বর</label>
+            <input id="clientPhone" type="tel" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 transition text-sm" placeholder="017xxxxxxxx">
           </div>
           <div>
-            <label class="block text-xs uppercase tracking-wider text-slate-300 mb-2 font-semibold">মোবাইল / WhatsApp নম্বর</label>
-            <input type="tel" id="phone" placeholder="01XXXXXXXXX" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 text-sm" required />
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div>
-            <label class="block text-xs uppercase tracking-wider text-slate-300 mb-2 font-semibold">সার্ভিসের ধরন</label>
-            <select id="service" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 text-sm">
-              <option value="Nationwide PoP ও ম্যাক পার্টনারশিপ">Nationwide PoP ও ম্যাক পার্টনারশিপ</option>
-              <option value="বাল্ক ব্যান্ডউইথ (BSCCL / Exabyte / Rego)">বাল্ক ব্যান্ডউইথ (BSCCL / Exabyte / Rego)</option>
-              <option value="উভয় সেবা প্রয়োজন">উভয় সেবা প্রয়োজন</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs uppercase tracking-wider text-slate-300 mb-2 font-semibold">ক্যাপাসিটি চাহিদা</label>
-            <select id="capacity" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 text-sm">
-              <option value="৫০ - ১০০ Mbps">৫০ - ১০০ Mbps</option>
-              <option value="১০০ - ৫০০ Mbps">১০০ - ৫০০ Mbps</option>
-              <option value="৫০০+ Mbps / ১ Gbps+">৫০০+ Mbps / ১ Gbps+</option>
-              <option value="নতুন ইউজার সেটআপ (ম্যাক ভিত্তিক)">নতুন ইউজার সেটআপ (ম্যাক ভিত্তিক)</option>
-            </select>
+            <label class="block text-xs font-semibold text-slate-300 mb-1 uppercase tracking-wider">আনুমানিক ব্যান্ডউইথ (Mbps)</label>
+            <input id="clientBandwidth" type="number" placeholder="যেমন: 500" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 transition text-sm">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs uppercase tracking-wider text-slate-300 mb-2 font-semibold">আপনার এলাকা / লোকেশন (জেলা ও থানা)</label>
-          <input type="text" id="location" placeholder="যেমন: সিদ্ধিরগঞ্জ, নারায়ণগঞ্জ" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 text-sm" required />
+          <label class="block text-xs font-semibold text-slate-300 mb-1 uppercase tracking-wider">অতিরিক্ত তথ্য / এরিয়া লোকেশন</label>
+          <textarea id="clientNote" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 transition text-sm" placeholder="আপনার প্রয়োজনীয় লোকেশন বা স্পেসিফিকেশন লিখুন..."></textarea>
         </div>
 
-        <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl transition duration-200 shadow-lg shadow-blue-500/20 text-sm flex items-center justify-center gap-2">
-          <span>অনুরোধ পাঠান (Get Instant Quote)</span>
+        <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-600/30 text-sm">
+          রিকোয়েস্ট সাবমিট করুন
         </button>
+        <p id="statusMsg" class="text-xs text-center mt-2 hidden"></p>
       </form>
-    </div>
-  </section>
+    </section>
+
+  </main>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-800 bg-slate-950 py-10">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-      <div>
-        <p class="font-bold text-slate-200">Senior Marketing Executive</p>
-        <p class="text-xs text-slate-400">Paradise Technologies Limited</p>
+  <footer class="border-t border-slate-800 bg-slate-900/60 py-6 text-center text-slate-500 text-sm">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>&copy; 2026 Paradise Tech. সর্বস্বত্ব সংরক্ষিত।</p>
+      <div class="flex gap-4">
+        <a href="index.html" class="hover:text-slate-400 transition">হোম</a>
+        <a href="contact.html" class="hover:text-slate-400 transition">যোগাযোগ</a>
       </div>
-      <div class="flex gap-6 text-sm text-slate-400">
-        <a href="https://wa.me/8801407835827" target="_blank" class="hover:text-emerald-400 transition"><i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp: 01407835827</a>
-        <a href="tel:01407835827" class="hover:text-blue-400 transition"><i class="fa-solid fa-phone mr-1"></i> Call: 01407835827</a>
-      </div>
-      <p class="text-xs text-slate-500">&copy; 2026 Paradise Technologies Limited.</p>
     </div>
   </footer>
 
-  <!-- Supabase JS Client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
+  <!-- Supabase Logic -->
   <script>
-    // Supabase Credentials
-    const supabaseUrl = 'https://orbtgoxxnhgrisgqntgb.supabase.co';
-    const supabaseAnonKey = 'sb_publishable_egaBhum8iA4kN9EOBwhF-g_YB3umPPq';
-    const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+    // আপনার Supabase প্রজেক্ট সেটিংস থেকে Project URL এবং Anon Key এখানে বসিয়ে দিন
+    const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL';
+    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_PUBLIC_KEY';
 
-    const leadForm = document.getElementById('leadForm');
-    const submitBtn = document.getElementById('submitBtn');
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    leadForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    // ১. ব্যান্ডউইথ বা PoP অ্যাভেইলেবিলিটি চেক করার ফাংশন
+    async function checkAvailability() {
+      const loc = document.getElementById('searchLocation').value.trim();
+      const resultBox = document.getElementById('resultBox');
+      resultBox.classList.remove('hidden');
 
-      submitBtn.innerText = 'অপেক্ষা করুন...';
-      submitBtn.disabled = true;
+      if (!loc) {
+        resultBox.innerHTML = `<span class="text-amber-400"><i class="fa-solid fa-triangle-exclamation"></i> অনুগ্রহ করে এলাকা বা লোকেশনের নাম লিখুন।</span>`;
+        return;
+      }
 
-      const leadData = {
-        name: document.getElementById('name').value,
-        phone: document.getElementById('phone').value,
-        service: document.getElementById('service').value,
-        capacity: document.getElementById('capacity').value,
-        location: document.getElementById('location').value
-      };
+      resultBox.innerHTML = `<span class="text-slate-400"><i class="fa-solid fa-spinner fa-spin"></i> ডাটাবেজে সার্চ করা হচ্ছে...</span>`;
 
       try {
+        // 'pops' টেবিল থেকে লোকেশন ফিল্টার করে ডাটা আনা (আপনার টেবিল নাম অনুযায়ী মিল রাখুন)
         const { data, error } = await supabaseClient
-          .from('leads')
-          .insert([leadData]);
+          .from('pops')
+          .select('*')
+          .ilike('location', `%${loc}%`);
 
-        if (error) {
-          throw error;
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          resultBox.innerHTML = `
+            <div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl text-emerald-400">
+              <i class="fa-solid fa-circle-check"></i> ${loc}-এ PoP কভারেজ পাওয়া গেছে! মোট সক্রিয় হাব: ${data.length}টি।
+            </div>`;
+        } else {
+          resultBox.innerHTML = `
+            <div class="bg-blue-500/10 border border-blue-500/30 p-3 rounded-xl text-slate-300">
+              ${loc} এলাকায় সরাসরি পয়েন্ট পাওয়া যায়নি, তবে কাস্টম ফাইবার লিঙ্কের মাধ্যমে কানেকশন দেওয়া সম্ভব। নিচে কোটেশন ফর্মটি পূরণ করুন।
+            </div>`;
         }
-
-        alert('ধন্যবাদ! আপনার অনুরোধটি সফলভাবে জমা হয়েছে। আমরা শীঘ্রই যোগাযোগ করব।');
-        leadForm.reset();
       } catch (err) {
-        console.error('Supabase Error:', err);
-        alert('দুঃখিত, কোনো সমস্যা হয়েছে। অনুগ্রহ করে সরাসরি আমাদের হোয়াটসঅ্যাপে নক দিন।');
-      } finally {
-        submitBtn.innerText = 'অনুরোধ পাঠান (Get Instant Quote)';
-        submitBtn.disabled = false;
+        resultBox.innerHTML = `<span class="text-rose-400"><i class="fa-solid fa-circle-xmark"></i> ডাটা ফেচ করতে সমস্যা হয়েছে: ${err.message}</span>`;
       }
-    });
-  </script>
+    }
 
+    // ২. কোটেশন ফর্ম ডাটাবেজে জমা দেওয়ার ফাংশন
+    async function submitInquiry(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const msg = document.getElementById('statusMsg');
+
+      const name = document.getElementById('clientName').value;
+      const phone = document.getElementById('clientPhone').value;
+      const bandwidth = document.getElementById('clientBandwidth').value;
+      const note = document.getElementById('clientNote').value;
+
+      btn.disabled = true;
+      btn.innerText = 'সাবমিট হচ্ছে...';
+      msg.classList.remove('hidden');
+      msg.innerText = '';
+
+      try {
+        // 'inquiries' টেবিলে ডাটা ইনসার্ট করা
+        const { error } = await supabaseClient
+          .from('inquiries')
+          .insert([
+            { name: name, phone: phone, bandwidth_mbps: bandwidth, note: note }
+          ]);
+
+        if (error) throw error;
+
+        msg.className = 'text-xs text-center mt-2 text-emerald-400';
+        msg.innerText = '✓ আপনার তথ্য সফলভাবে জমা হয়েছে। প্রতিনিধি দ্রুত যোগাযোগ করবেন।';
+        document.getElementById('inquiryForm').reset();
+      } catch (err) {
+        msg.className = 'text-xs text-center mt-2 text-rose-400';
+        msg.innerText = `সাবমিট ব্যর্থ হয়েছে: ${err.message}`;
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'রিকোয়েস্ট সাবমিট করুন';
+      }
+    }
+  </script>
 </body>
 </html>
