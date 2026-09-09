@@ -143,43 +143,57 @@
 
   <!-- Supabase Logic -->
   <script>
-    // আপনার Supabase প্রজেক্ট সেটিংস থেকে Project URL এবং Anon Key এখানে বসিয়ে দিন
     const SUPABASE_URL = 'https://orbtgoxxnhgrisgqntgb.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_egaBhum8iA4kN9EOBwhF-g_YB3umPPq';
 
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabaseClient = typeof supabase !== 'undefined'
+      ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
 
-    // ১. ব্যান্ডউইথ বা PoP অ্যাভেইলেবিলিটি চেক করার ফাংশন
+    const serviceLabelMap = {
+      raw: 'Raw Bandwidth (IP Transit)',
+      mac: 'MAC Based Bandwidth',
+      pop: 'Direct PoP Handover'
+    };
+
     async function checkAvailability() {
       const loc = document.getElementById('searchLocation').value.trim();
+      const serviceType = document.getElementById('serviceType').value;
       const resultBox = document.getElementById('resultBox');
+      const selectedLabel = serviceType ? serviceLabelMap[serviceType] || serviceType : 'সার্ভিস টাইপ না বাছাইয়া';
+
       resultBox.classList.remove('hidden');
 
       if (!loc) {
-        resultBox.innerHTML = `<span class="text-amber-400"><i class="fa-solid fa-triangle-exclamation"></i> অনুগ্রহ করে এলাকা বা লোকেশনের নাম লিখুন।</span>`;
+        resultBox.innerHTML = '<span class="text-amber-400"><i class="fa-solid fa-triangle-exclamation"></i> অনুগ্রহ করে এলাকা বা লোকেশনের নাম লিখুন।</span>';
         return;
       }
 
-      resultBox.innerHTML = `<span class="text-slate-400"><i class="fa-solid fa-spinner fa-spin"></i> ডাটাবেজে সার্চ করা হচ্ছে...</span>`;
+      if (!supabaseClient) {
+        resultBox.innerHTML = `
+          <div class="bg-amber-500/10 border border-amber-500/30 p-3 rounded-xl text-amber-300">
+            <i class="fa-solid fa-circle-exclamation"></i> Supabase লোড হয়নি। ব্রাউজার কনসোলে ত্রুটি আছে কি না দেখতে হবে।
+          </div>`;
+        return;
+      }
+
+      resultBox.innerHTML = '<span class="text-slate-400"><i class="fa-solid fa-spinner fa-spin"></i> ডাটাবেজে সার্চ করা হচ্ছে...</span>';
 
       try {
-        // 'pops' টেবিল থেকে লোকেশন ফিল্টার করে ডাটা আনা (আপনার টেবিল নাম অনুযায়ী মিল রাখুন)
-        const { data, error } = await supabaseClient
-          .from('pops')
-          .select('*')
-          .ilike('location', `%${loc}%`);
+        const query = supabaseClient.from('pops').select('*');
+        const { data, error } = await query.ilike('location', `%${loc}%`);
 
         if (error) throw error;
 
         if (data && data.length > 0) {
           resultBox.innerHTML = `
             <div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl text-emerald-400">
-              <i class="fa-solid fa-circle-check"></i> ${loc}-এ PoP কভারেজ পাওয়া গেছে! মোট সক্রিয় হাব: ${data.length}টি।
+              <i class="fa-solid fa-circle-check"></i> ${loc}-এ ${selectedLabel} জন্য PoP কভারেজ পাওয়া গেছে। মোট সক্রিয় হাব: ${data.length}টি।
             </div>`;
         } else {
           resultBox.innerHTML = `
             <div class="bg-blue-500/10 border border-blue-500/30 p-3 rounded-xl text-slate-300">
-              ${loc} এলাকায় সরাসরি পয়েন্ট পাওয়া যায়নি, তবে কাস্টম ফাইবার লিঙ্কের মাধ্যমে কানেকশন দেওয়া সম্ভব। নিচে কোটেশন ফর্মটি পূরণ করুন।
+              ${loc} এলাকায় ${selectedLabel} এর জন্য সরাসরি কভারেজ পাওয়া যায়নি, তবে কাস্টম ফাইবার লিঙ্কের মাধ্যমে কানেকশন দেওয়া সম্ভব। নিচে কোটেশন ফর্মটি পূরণ করুন।
             </div>`;
         }
       } catch (err) {
@@ -187,16 +201,22 @@
       }
     }
 
-    // ২. কোটেশন ফর্ম ডাটাবেজে জমা দেওয়ার ফাংশন
     async function submitInquiry(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
       const msg = document.getElementById('statusMsg');
 
-      const name = document.getElementById('clientName').value;
-      const phone = document.getElementById('clientPhone').value;
-      const bandwidth = document.getElementById('clientBandwidth').value;
-      const note = document.getElementById('clientNote').value;
+      const name = document.getElementById('clientName').value.trim();
+      const phone = document.getElementById('clientPhone').value.trim();
+      const bandwidth = document.getElementById('clientBandwidth').value.trim();
+      const note = document.getElementById('clientNote').value.trim();
+
+      if (!name || !phone) {
+        msg.className = 'text-xs text-center mt-2 text-amber-400';
+        msg.innerText = 'নাম ও মোবাইল নম্বর অবশ্যই দিতে হবে।';
+        msg.classList.remove('hidden');
+        return;
+      }
 
       btn.disabled = true;
       btn.innerText = 'সাবমিট হচ্ছে...';
@@ -204,7 +224,10 @@
       msg.innerText = '';
 
       try {
-        // 'inquiries' টেবিলে ডাটা ইনসার্ট করা
+        if (!supabaseClient) {
+          throw new Error('Supabase client is not available in this browser session.');
+        }
+
         const { error } = await supabaseClient
           .from('inquiries')
           .insert([
