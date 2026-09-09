@@ -286,7 +286,7 @@
       Brahmanbaria: ['Brahmanbaria Sadar', 'Ashuganj', 'Nabinagar', 'Sarail', 'Kasba'],
       Chandpur: ['Chandpur Sadar', 'Faridganj', 'Haimchar', 'Kachua', 'Matlab Uttar'],
       Cumilla: ['Cumilla Sadar', 'Debidwar', 'Muradnagar', 'Laksham', 'Chandina', 'Daudkandi'],
-      Cox\'s Bazar: ['Cox\'s Bazar Sadar', 'Teknaf', 'Ukhia', 'Ramu', 'Maheshkhali'],
+      "Cox's Bazar": ["Cox's Bazar Sadar", 'Teknaf', 'Ukhia', 'Ramu', 'Maheshkhali'],
       Feni: ['Feni Sadar', 'Chhagalnaiya', 'Daganbhuiyan', 'Parshuram'],
       Khagrachhari: ['Khagrachhari Sadar', 'Dighinala', 'Panchhari', 'Laxmichhari', 'Ramgarh'],
       Lakshmipur: ['Lakshmipur Sadar', 'Raipur', 'Ramganj', 'Kamalnagar'],
@@ -394,8 +394,140 @@
 
     document.getElementById('divisionSelect').addEventListener('change', populateDistricts);
     document.getElementById('districtSelect').addEventListener('change', populateThanas);
+
+    const BD_API_BASE = 'https://bdapis.com/api/v1.2';
+    const divisionLocationCache = {};
+    let supabaseLocations = [];
+
+    async function loadSupabaseLocations() {
+      if (!supabaseClient) return;
+
+      const { data, error } = await supabaseClient
+        .from('locations')
+        .select('division,district,thana,union_name,village_name')
+        .order('division')
+        .order('district')
+        .order('thana');
+
+      if (!error && Array.isArray(data)) supabaseLocations = data;
+    }
+
+    function fillDatalist(id, values) {
+      const datalist = document.getElementById(id);
+      datalist.innerHTML = [...new Set(values)].sort().map(value => `<option value="${value}"></option>`).join('');
+    }
+
+    async function loadLiveDistrictsAndThanas() {
+      const division = document.getElementById('divisionSelect').value;
+      const districtSelect = document.getElementById('districtSelect');
+      const thanaSelect = document.getElementById('thanaSelect');
+
+      if (!division) {
+        setSelectOptions(districtSelect, [], 'জেলা বেছে নিন');
+        setSelectOptions(thanaSelect, [], 'থানা বেছে নিন');
+        return;
+      }
+
+      districtSelect.disabled = true;
+      thanaSelect.disabled = true;
+      districtSelect.innerHTML = '<option value="">জেলা লোড হচ্ছে...</option>';
+
+      try {
+        const cacheKey = division.toLowerCase();
+        const tableRows = supabaseLocations.filter(row => row.division.toLowerCase() === cacheKey);
+        if (tableRows.length > 0) {
+          const grouped = {};
+          tableRows.forEach(row => {
+            grouped[row.district] = grouped[row.district] || { district: row.district, upazilla: [] };
+            if (row.thana && !grouped[row.district].upazilla.includes(row.thana)) {
+              grouped[row.district].upazilla.push(row.thana);
+            }
+          });
+          divisionLocationCache[cacheKey] = Object.values(grouped);
+        } else if (!divisionLocationCache[cacheKey]) {
+          const response = await fetch(`${BD_API_BASE}/division/${encodeURIComponent(cacheKey)}`);
+          const payload = await response.json();
+          if (!payload.data || !Array.isArray(payload.data)) throw new Error('লোকেশন ডাটা পাওয়া যায়নি');
+          divisionLocationCache[cacheKey] = payload.data;
+        }
+
+        const records = divisionLocationCache[cacheKey];
+        const selectedDistrict = document.getElementById('districtSelect').value;
+        const districts = records.map(record => record.district);
+        setSelectOptions(districtSelect, districts, 'জেলা বেছে নিন');
+        if (districts.includes(selectedDistrict)) districtSelect.value = selectedDistrict;
+        districtSelect.disabled = false;
+        loadLiveThanas();
+      } catch (error) {
+        districtSelect.disabled = false;
+        districtSelect.innerHTML = '<option value="">জেলা লোড হয়নি - আবার চেষ্টা করুন</option>';
+        const locationStatus = document.getElementById('resultBox');
+        locationStatus.classList.remove('hidden');
+        locationStatus.innerHTML = `<span class="text-amber-400">লাইভ লোকেশন ডাটা লোড হয়নি। ${error.message}</span>`;
+      }
+    }
+
+    function loadLiveThanas() {
+      const division = document.getElementById('divisionSelect').value.toLowerCase();
+      const district = document.getElementById('districtSelect').value;
+      const tableThanas = [...new Set(supabaseLocations
+        .filter(row => row.division.toLowerCase() === division && row.district === district)
+        .map(row => row.thana)
+        .filter(Boolean))];
+      const record = (divisionLocationCache[division] || []).find(item => item.district === district);
+      const thanas = tableThanas.length > 0
+        ? tableThanas
+        : (record && Array.isArray(record.upazilla) ? record.upazilla : []);
+      setSelectOptions(document.getElementById('thanaSelect'), thanas, 'থানা/উপজেলা বেছে নিন');
+      document.getElementById('thanaSelect').disabled = false;
+      setSelectOptions(document.getElementById('unionSelect'), [], 'ইউনিয়ন বেছে নিন');
+      setSelectOptions(document.getElementById('villageSelect'), [], 'গ্রাম/লোকেশন বেছে নিন');
+    }
+
+    document.getElementById('divisionSelect').addEventListener('change', loadLiveDistrictsAndThanas);
+    document.getElementById('districtSelect').addEventListener('change', loadLiveThanas);
     document.getElementById('thanaSelect').addEventListener('change', populateUnions);
     document.getElementById('unionSelect').addEventListener('change', populateVillages);
+    const originalPopulateUnions = populateUnions;
+    const originalPopulateVillages = populateVillages;
+
+    populateUnions = function () {
+      const division = document.getElementById('divisionSelect').value;
+      const district = document.getElementById('districtSelect').value;
+      const thana = document.getElementById('thanaSelect').value;
+      const tableUnions = [...new Set(supabaseLocations
+        .filter(row => row.division === division && row.district === district && row.thana === thana)
+        .map(row => row.union_name)
+        .filter(Boolean))];
+
+      if (tableUnions.length > 0) {
+        setSelectOptions(document.getElementById('unionSelect'), tableUnions, 'ইউনিয়ন বেছে নিন');
+        setSelectOptions(document.getElementById('villageSelect'), [], 'গ্রাম/লোকেশন বেছে নিন');
+      } else {
+        originalPopulateUnions();
+      }
+    };
+
+    populateVillages = function () {
+      const division = document.getElementById('divisionSelect').value;
+      const district = document.getElementById('districtSelect').value;
+      const thana = document.getElementById('thanaSelect').value;
+      const union = document.getElementById('unionSelect').value;
+      const tableVillages = [...new Set(supabaseLocations
+        .filter(row => row.division === division && row.district === district && row.thana === thana && row.union_name === union)
+        .map(row => row.village_name)
+        .filter(Boolean))];
+
+      if (tableVillages.length > 0) {
+        setSelectOptions(document.getElementById('villageSelect'), tableVillages, 'গ্রাম/লোকেশন বেছে নিন');
+      } else {
+        originalPopulateVillages();
+      }
+    };
+
+    document.getElementById('thanaSelect').addEventListener('change', populateUnions);
+    document.getElementById('unionSelect').addEventListener('change', populateVillages);
+    loadSupabaseLocations().finally(loadLiveDistrictsAndThanas);
 
     function getCurrentLocation() {
       if (!navigator.geolocation) {
