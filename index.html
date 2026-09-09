@@ -23,13 +23,81 @@
     body {
       font-family: 'Hind Siliguri', sans-serif;
     }
+
+    #topbar {
+      flex-wrap: wrap;
+    }
+
+    #topbarActions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .search-location-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .search-detail-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 1024px) {
+      .search-location-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      }
+
+      .search-detail-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      #topbar {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+      }
+
+      #topbarActions {
+        width: 100%;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+
+      #topbarActions nav {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .search-location-grid,
+      .search-detail-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      main {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 2rem;
+      }
+
+      section {
+        padding: 1rem;
+      }
+
+      #latitudeInput,
+      #longitudeInput {
+        min-width: 0;
+      }
+    }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-100 antialiased selection:bg-blue-500 selection:text-white min-h-screen flex flex-col justify-between">
 
   <!-- Header -->
   <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+    <div id="topbar" class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3 min-w-0">
         <div id="brandLogoWrap" class="hidden h-11 w-11 rounded-xl overflow-hidden border border-slate-700 bg-slate-800 shadow-lg shadow-slate-950/20">
           <img id="brandLogo" src="" alt="Paradise Tech Logo" class="h-full w-full object-cover">
@@ -43,7 +111,7 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-3 sm:gap-6">
+      <div id="topbarActions" class="flex items-center gap-3 sm:gap-6">
         <nav class="flex items-center gap-4 sm:gap-6 text-sm md:text-base">
           <a href="index.html" class="text-blue-400 font-bold border-b-2 border-blue-400 pb-1">হোম</a>
           <a href="contact.html" class="text-slate-400 hover:text-blue-400 font-medium transition pb-1">যোগাযোগ</a>
@@ -86,7 +154,7 @@
       </h2>
 
       <div class="space-y-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
+        <div class="search-location-grid grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
           <select id="countrySelect" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
             <option value="Bangladesh" selected>Bangladesh</option>
           </select>
@@ -115,7 +183,7 @@
           <datalist id="unionOptions"></datalist>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
+        <div class="search-detail-grid grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
           <input id="villageSelect" list="villageOptions" placeholder="গ্রাম/লোকেশন লিখুন" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
           <datalist id="villageOptions"></datalist>
 
