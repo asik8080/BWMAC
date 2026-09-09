@@ -111,15 +111,13 @@
             <option value="">থানা বেছে নিন</option>
           </select>
 
-          <select id="unionSelect" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
-            <option value="">ইউনিয়ন বেছে নিন</option>
-          </select>
+          <input id="unionSelect" list="unionOptions" placeholder="ইউনিয়ন লিখুন" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
+          <datalist id="unionOptions"></datalist>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
-          <select id="villageSelect" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
-            <option value="">গ্রাম/লোকেশন বেছে নিন</option>
-          </select>
+          <input id="villageSelect" list="villageOptions" placeholder="গ্রাম/লোকেশন লিখুন" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
+          <datalist id="villageOptions"></datalist>
 
           <select id="serviceType" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition text-sm">
             <option value="">সার্ভিসের ধরন বেছে নিন</option>
@@ -350,6 +348,13 @@
     };
 
     function setSelectOptions(selectElement, options, placeholderText) {
+      if (selectElement.tagName === 'INPUT') {
+        const datalistId = selectElement.id === 'unionSelect' ? 'unionOptions' : 'villageOptions';
+        selectElement.value = '';
+        document.getElementById(datalistId).innerHTML = options
+          .map(item => `<option value="${item}"></option>`).join('');
+        return;
+      }
       selectElement.innerHTML = '<option value="">' + placeholderText + '</option>' +
         options.map(item => `<option value="${item}">${item}</option>`).join('');
     }
