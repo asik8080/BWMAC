@@ -49,7 +49,7 @@
           <a href="contact.html" class="text-slate-400 hover:text-blue-400 font-medium transition pb-1">যোগাযোগ</a>
         </nav>
 
-        <label for="logoUpload" class="hidden sm:inline-flex items-center gap-2 cursor-pointer rounded-xl border border-slate-700 bg-slate-800 px-3 py-2 text-xs font-semibold text-slate-200 hover:border-blue-500/60 hover:text-blue-300 transition">
+        <label id="logoUploadBtn" for="logoUpload" class="hidden sm:inline-flex items-center gap-2 cursor-pointer rounded-xl border border-slate-700 bg-slate-800 px-3 py-2 text-xs font-semibold text-slate-200 hover:border-blue-500/60 hover:text-blue-300 transition">
           <i class="fa-solid fa-image"></i>
           Logo Upload
         </label>
@@ -156,13 +156,23 @@
   <!-- Supabase Logic -->
   <script>
     const logoUploadInput = document.getElementById('logoUpload');
+    const logoUploadBtn = document.getElementById('logoUploadBtn');
     const brandLogoWrap = document.getElementById('brandLogoWrap');
     const brandLogo = document.getElementById('brandLogo');
+
+    function toggleLogoUploadButton(showButton) {
+      if (logoUploadBtn) {
+        logoUploadBtn.classList.toggle('hidden', !showButton);
+      }
+    }
 
     const savedLogo = localStorage.getItem('paradiseTechLogo');
     if (savedLogo) {
       brandLogo.src = savedLogo;
       brandLogoWrap.classList.remove('hidden');
+      toggleLogoUploadButton(false);
+    } else {
+      toggleLogoUploadButton(true);
     }
 
     logoUploadInput.addEventListener('change', function (event) {
@@ -180,6 +190,7 @@
         brandLogo.src = imageData;
         brandLogoWrap.classList.remove('hidden');
         localStorage.setItem('paradiseTechLogo', imageData);
+        toggleLogoUploadButton(false);
       };
       reader.readAsDataURL(file);
     });
