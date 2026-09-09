@@ -25,9 +25,14 @@
       background: rgba(7, 17, 31, .92);
       backdrop-filter: blur(18px);
     }
+
+    header.fixed {
+      position: sticky;
+      top: 0.75rem;
+    }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 antialiased selection:bg-blue-500 selection:text-white min-h-screen flex flex-col justify-between">
+<body class="bg-slate-950 text-slate-100 antialiased p-2 sm:p-4 md:p-6 min-h-screen selection:bg-blue-500 selection:text-white"><div class="bg-slate-900 border border-slate-800/80 rounded-2xl md:rounded-3xl min-h-[calc(100vh-1rem)] md:min-h-[calc(100vh-3rem)] flex flex-col justify-between overflow-hidden shadow-2xl relative">
 
   <!-- Header -->
   <header class="fixed top-4 left-0 right-0 z-50 px-4">
@@ -165,5 +170,5 @@
     });
   </script>
 
-</body>
+</div></body>
 </html>
