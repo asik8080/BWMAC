@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Quote - Paradise Tech</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body { font-family: 'Hind Siliguri', sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-900 text-slate-100 antialiased selection:bg-blue-500 selection:text-white flex flex-col">
+  <header class="sticky top-4 z-50 px-4">
+    <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-700/70 bg-slate-900/80 px-4 py-3 shadow-2xl shadow-slate-950/40 backdrop-blur-xl">
+      <div class="min-w-0">
+        <a href="index.html" class="text-2xl font-black tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">PARADISE TECH</a>
+        <span class="block text-xs font-medium text-slate-400">B2B Network &amp; Telecom Partner</span>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-6">
+        <nav class="hidden items-center gap-1 text-sm md:flex">
+          <a href="index.html" class="rounded-xl px-3 py-2 font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">Home</a>
+          <a href="index.html#services" class="rounded-xl px-3 py-2 font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">Bandwidth &amp; PoP</a>
+          <a href="quote.html" class="inline-flex items-center gap-2 rounded-xl bg-blue-500/15 px-3 py-2 font-bold text-blue-300 ring-1 ring-inset ring-blue-400/30"><span class="h-1.5 w-1.5 rounded-full bg-blue-300"></span>Get Quote</a>
+          <a href="contact.html" class="rounded-xl px-3 py-2 font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">Contact</a>
+        </nav>
+
+        <a href="https://wa.me/8801407835827" target="_blank" class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-emerald-500">
+          <i class="fa-brands fa-whatsapp text-base"></i>
+          <span class="hidden sm:inline">Live Support</span>
+        </a>
+        <button id="mobileMenuButton" type="button" aria-expanded="false" aria-controls="mobileMenu" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-700 text-slate-200 transition hover:border-blue-400 hover:text-blue-300 md:hidden" title="Open navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+
+      <div id="mobileMenu" class="hidden w-full border-t border-slate-700/70 pt-3 md:hidden">
+        <nav class="grid gap-1 text-sm">
+          <a href="index.html" class="rounded-xl px-3 py-2 font-medium text-slate-300 hover:bg-slate-800 hover:text-white">Home</a>
+          <a href="index.html#services" class="rounded-xl px-3 py-2 font-medium text-slate-300 hover:bg-slate-800 hover:text-white">Bandwidth &amp; PoP</a>
+          <a href="quote.html" class="inline-flex items-center gap-2 rounded-xl bg-blue-500/15 px-3 py-2 font-bold text-blue-300 ring-1 ring-inset ring-blue-400/30"><span class="h-1.5 w-1.5 rounded-full bg-blue-300"></span>Get Quote</a>
+          <a href="contact.html" class="rounded-xl px-3 py-2 font-medium text-slate-300 hover:bg-slate-800 hover:text-white">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto w-full max-w-4xl flex-1 px-6 pb-20 pt-14">
+    <div class="mb-10 text-center">
+      <span class="mb-3 inline-block rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-400">Bandwidth &amp; PoP Quote</span>
+      <h1 class="mb-3 text-3xl font-extrabold leading-tight text-white md:text-5xl">Get a tailored network quote</h1>
+      <p class="mx-auto max-w-2xl text-slate-400">আপনার প্রয়োজনীয় bandwidth, PoP handover এবং এলাকার তথ্য পাঠান। আমাদের টেকনিক্যাল টিম দ্রুত যোগাযোগ করবে।</p>
+    </div>
+
+    <form id="quoteForm" class="space-y-6" onsubmit="submitQuote(event)">
+      <section class="rounded-2xl border border-slate-700/70 bg-slate-800/60 p-6 shadow-xl md:p-8">
+        <h2 class="mb-2 flex items-center gap-2 text-lg font-bold text-white"><i class="fa-solid fa-network-wired text-blue-400"></i> Bandwidth &amp; PoP inquiry</h2>
+        <p class="mb-6 text-sm text-slate-400">আপনার service type এবং coverage area নির্বাচন করুন।</p>
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <select id="quoteServiceType" required class="rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-slate-300 focus:border-blue-500 focus:outline-none">
+            <option value="">Service type বেছে নিন</option>
+            <option value="raw">Raw Bandwidth (IP Transit)</option>
+            <option value="mac">MAC Based Bandwidth</option>
+            <option value="pop">Direct PoP Handover</option>
+          </select>
+          <input id="quoteBandwidth" type="number" min="1" required placeholder="প্রয়োজনীয় bandwidth (Mbps)" class="rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none">
+          <input id="quoteDivision" type="text" required placeholder="Division" class="rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none">
+          <input id="quoteDistrict" type="text" required placeholder="District" class="rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none">
+          <input id="quoteThana" type="text" placeholder="Thana / Upazila" class="rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none">
+          <input id="quoteArea" type="text" placeholder="Union / Village / Area" class="rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none">
+        </div>
+      </section>
+
+      <section class="rounded-2xl border border-slate-700/70 bg-slate-800/40 p-6 md:p-8">
+        <h2 class="mb-2 text-xl font-bold text-white">Quotation request</h2>
+        <p class="mb-6 text-sm text-slate-400">আপনার যোগাযোগের তথ্য দিন।</p>
+
+        <div class="space-y-4">
+          <input id="clientName" type="text" required placeholder="নাম / প্রতিষ্ঠানের নাম" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none">
+          <input id="clientPhone" type="tel" required placeholder="মোবাইল নম্বর" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none">
+          <textarea id="clientNote" rows="4" placeholder="অতিরিক্ত তথ্য বা technical requirement" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"></textarea>
+          <button id="submitBtn" type="submit" class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 font-bold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-500"><i class="fa-solid fa-paper-plane"></i> Submit quote request</button>
+          <p id="statusMsg" class="hidden text-center text-sm"></p>
+        </div>
+      </section>
+    </form>
+  </main>
+
+  <footer class="border-t border-slate-800 bg-slate-900/60 py-6 text-center text-sm text-slate-500">
+    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
+      <p>&copy; 2026 Paradise Tech. সর্বস্বত্ব সংরক্ষিত।</p>
+      <div class="flex gap-4"><a href="index.html" class="transition hover:text-slate-300">Home</a><a href="contact.html" class="transition hover:text-slate-300">Contact</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuButton.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('hidden') === false;
+      mobileMenuButton.setAttribute('aria-expanded', String(isOpen));
+      mobileMenuButton.innerHTML = isOpen ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+      mobileMenuButton.title = isOpen ? 'Close navigation' : 'Open navigation';
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', 'false');
+      mobileMenuButton.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    }));
+
+    const SUPABASE_URL = 'https://orbtgoxxnhgrisgqntgb.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_egaBhum8iA4kN9EOBwhF-g_YB3umPPq';
+    const supabaseClient = typeof supabase !== 'undefined' ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+    async function submitQuote(event) {
+      event.preventDefault();
+      const button = document.getElementById('submitBtn');
+      const status = document.getElementById('statusMsg');
+      const note = [
+        `Service: ${document.getElementById('quoteServiceType').value}`,
+        `Location: ${document.getElementById('quoteDivision').value}, ${document.getElementById('quoteDistrict').value}, ${document.getElementById('quoteThana').value}, ${document.getElementById('quoteArea').value}`,
+        `Requirement: ${document.getElementById('quoteBandwidth').value} Mbps`,
+        document.getElementById('clientNote').value
+      ].filter(Boolean).join('\n');
+
+      button.disabled = true;
+      status.className = 'text-center text-sm text-slate-400';
+      status.textContent = 'Submitting...';
+      status.classList.remove('hidden');
+
+      try {
+        if (!supabaseClient) throw new Error('Supabase is unavailable.');
+        const { error } = await supabaseClient.from('inquiries').insert([{
+          name: document.getElementById('clientName').value.trim(),
+          phone: document.getElementById('clientPhone').value.trim(),
+          bandwidth_mbps: document.getElementById('quoteBandwidth').value,
+          note
+        }]);
+        if (error) throw error;
+        status.className = 'text-center text-sm text-emerald-400';
+        status.textContent = 'Request submitted successfully.';
+        document.getElementById('quoteForm').reset();
+      } catch (error) {
+        status.className = 'text-center text-sm text-rose-400';
+        status.textContent = `Submission failed: ${error.message}`;
+      } finally {
+        button.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
